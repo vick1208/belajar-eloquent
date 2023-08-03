@@ -27,7 +27,7 @@ class CategoryTest extends TestCase
     {
         $categories = [];
 
-        for ($i=0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $categories[] = [
                 "id" => "ID $i",
                 "name" => "Name $i"
@@ -42,20 +42,21 @@ class CategoryTest extends TestCase
         $total = Category::count();
 
         assertEquals(10, $total);
-
     }
-    public function testFind() {
+    public function testFind()
+    {
         $this->seed(CategorySeeder::class);
 
         $category = Category::find("FASH");
         self::assertNotNull($category);
 
-        assertEquals("FASH",$category->id);
-        assertEquals("Fashion",$category->name);
-        assertEquals("Fashion Category",$category->description);
+        assertEquals("FASH", $category->id);
+        assertEquals("Fashion", $category->name);
+        assertEquals("Fashion Category", $category->description);
     }
 
-    public function testUpdate(){
+    public function testUpdate()
+    {
         $this->seed(CategorySeeder::class);
 
         $category =  Category::find("FASH");
@@ -64,5 +65,25 @@ class CategoryTest extends TestCase
         $res = $category->update();
 
         assertTrue($res);
+    }
+    public function testSelect()
+    {
+        for ($i = 0; $i < 5; $i++) {
+            $category = new Category();
+            $category->id = "ID $i";
+            $category->name = "Name $i";
+            $category->save();
+        }
+
+        $categories = Category::whereNull("description")->get();
+
+        assertEquals(5, $categories->count());
+
+        $categories->each(function ($category) {
+            self::assertNull($category->description);
+
+            $category->description = "Edited";
+            $category->update();
+        });
     }
 }
