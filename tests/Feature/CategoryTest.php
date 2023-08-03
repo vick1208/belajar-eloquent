@@ -27,7 +27,7 @@ class CategoryTest extends TestCase
     {
         $categories = [];
 
-        for ($i=0; $i < 10; $i++) { 
+        for ($i=0; $i < 10; $i++) {
             $categories[] = [
                 "id" => "ID $i",
                 "name" => "Name $i"
@@ -53,5 +53,16 @@ class CategoryTest extends TestCase
         assertEquals("FASH",$category->id);
         assertEquals("Fashion",$category->name);
         assertEquals("Fashion Category",$category->description);
+    }
+
+    public function testUpdate(){
+        $this->seed(CategorySeeder::class);
+
+        $category =  Category::find("FASH");
+        $category->name = "Fashion Updated";
+
+        $res = $category->update();
+
+        assertTrue($res);
     }
 }
