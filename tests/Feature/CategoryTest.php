@@ -47,12 +47,12 @@ class CategoryTest extends TestCase
     {
         $this->seed(CategorySeeder::class);
 
-        $category = Category::find("FASH");
+        $category = Category::find("FOOD");
         self::assertNotNull($category);
 
-        assertEquals("FASH", $category->id);
-        assertEquals("Fashion", $category->name);
-        assertEquals("Fashion Category", $category->description);
+        assertEquals("FOOD", $category->id);
+        assertEquals("Food", $category->name);
+        assertEquals("Food Category", $category->description);
     }
 
     public function testUpdate()
@@ -60,7 +60,7 @@ class CategoryTest extends TestCase
         $this->seed(CategorySeeder::class);
 
         $category =  Category::find("FASH");
-        $category->name = "Fashion Updated";
+        $category->name = "Food Updated";
 
         $res = $category->update();
 
@@ -110,7 +110,7 @@ class CategoryTest extends TestCase
     public function testDelete()
     {
         $this->seed(CategorySeeder::class);
-        $cat = Category::find("FASH");
+        $cat = Category::find("FOOD");
         $result = $cat->delete();
         self::assertTrue($result);
         $total = Category::count();
@@ -138,5 +138,44 @@ class CategoryTest extends TestCase
 
         $total = Category::count();
         assertEquals(0, $total);
+    }
+
+    public function testCreate(){
+
+        $request = [
+            "id" => "FOOD",
+            "name" => "Food",
+            "description"=>"lorem"
+        ];
+
+        $category = new Category($request);
+        $category->save();
+        self::assertNotNull($category->id);
+    }
+    public function testCreateQueryBuild(){
+
+        $request = [
+            "id" => "FOOD",
+            "name" => "Food",
+            "description"=>"lorem"
+        ];
+
+        $category = Category::create($request);
+        self::assertNotNull($category->id);
+    }
+
+    public function testMassUpd(){
+        $this->seed(CategorySeeder::class);
+
+        $request = [
+            "name" => "Food Updated",
+            "description" => "Food Category Updated"
+        ];
+
+        $category = Category::find("FOOD");
+        $category->fill($request);
+        $category->save();
+
+        self::assertNotNull($category->id);
     }
 }

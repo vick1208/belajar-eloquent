@@ -14,9 +14,9 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $category = new Category();
-        $category->id = "FASH";
-        $category->name = "Fashion";
-        $category->description = "Fashion Category";
+        $category->id = "FOOD";
+        $category->name = "Food";
+        $category->description = "Food Category";
         $category->save();
     }
 }
