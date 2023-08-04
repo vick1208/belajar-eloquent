@@ -104,7 +104,39 @@ class CategoryTest extends TestCase
         Category::whereNull("description")->update([
             "description" => "Edited"
         ]);
-        $total = Category::where("description","=","Edited")->count();
-        assertEquals(10,$total);
+        $total = Category::where("description", "=", "Edited")->count();
+        assertEquals(10, $total);
+    }
+    public function testDelete()
+    {
+        $this->seed(CategorySeeder::class);
+        $cat = Category::find("FASH");
+        $result = $cat->delete();
+        self::assertTrue($result);
+        $total = Category::count();
+
+        assertEquals(0, $total);
+    }
+    public function testManyDelete()
+    {
+        $categories = [];
+
+        for ($i = 0; $i < 10; $i++) {
+            $categories[] = [
+                "id" => "ID $i",
+                "name" => "Name $i"
+            ];
+        }
+
+        $res = Category::insert($categories);
+        assertTrue($res);
+
+        $total = Category::count();
+        assertEquals(10, $total);
+
+        Category::whereNull("description")->delete();
+
+        $total = Category::count();
+        assertEquals(0, $total);
     }
 }
