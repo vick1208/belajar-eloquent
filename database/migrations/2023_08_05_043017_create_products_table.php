@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->string('id', 100)->nullable(false)->primary();
+            $table->string('name', 100)->nullable(false);
+            $table->text('description')->nullable();
+            $table->integer('price')->nullable(false)->default(0);
+            $table->integer('stock')->nullable(false)->default(0);
+            $table->string('category_id', 100)->nullable(false);
+            $table->foreign('category_id')->on("categories")->references('id');
         });
     }
 

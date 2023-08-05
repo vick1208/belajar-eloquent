@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Category;
 use App\Models\Scopes\IsActiveScope;
 use Database\Seeders\CategorySeeder;
+use Database\Seeders\ProductSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -141,31 +142,34 @@ class CategoryTest extends TestCase
         assertEquals(0, $total);
     }
 
-    public function testCreate(){
+    public function testCreate()
+    {
 
         $request = [
             "id" => "FOOD",
             "name" => "Food",
-            "description"=>"lorem"
+            "description" => "lorem"
         ];
 
         $category = new Category($request);
         $category->save();
         self::assertNotNull($category->id);
     }
-    public function testCreateQueryBuild(){
+    public function testCreateQueryBuild()
+    {
 
         $request = [
             "id" => "FOOD",
             "name" => "Food",
-            "description"=>"lorem"
+            "description" => "lorem"
         ];
 
         $category = Category::create($request);
         self::assertNotNull($category->id);
     }
 
-    public function testMassUpd(){
+    public function testMassUpd()
+    {
         $this->seed(CategorySeeder::class);
 
         $request = [
@@ -179,7 +183,8 @@ class CategoryTest extends TestCase
 
         self::assertNotNull($category->id);
     }
-    public function testGlobalScope(){
+    public function testGlobalScope()
+    {
         $category = new Category();
         $category->id = "ANIME";
         $category->name = "Anime";
@@ -191,5 +196,16 @@ class CategoryTest extends TestCase
         self::assertNull($category);
         $category = Category::query()->withoutGlobalScope(IsActiveScope::class)->find("ANIME");
         self::assertNotNull($category);
+    }
+    public function testOneToManyCat()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
+
+        $category = Category::query()->find("ANIME");
+        self::assertNotNull($category);
+
+        $products = $category->products;
+        self::assertNotNull($products);
+        self::assertCount(9, $products);
     }
 }
