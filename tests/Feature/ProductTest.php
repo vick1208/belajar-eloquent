@@ -20,7 +20,7 @@ class ProductTest extends TestCase
 
         $category = $product->category;
         self::assertNotNull($category);
-        self::assertEquals("ANIME",$category->id);
+        self::assertEquals("FOOD",$category->id);
 
 
     }
