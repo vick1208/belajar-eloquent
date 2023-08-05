@@ -14,29 +14,20 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
 
-        // Insert satu data
-        $product = new Product();
-        $product->id = "1";
-        $product->name = 'Product 1';
-        $product->description = 'Description Anything 1';
-        $product->category_id = 'FOOD';
-        $product->save();
+         $product = new Product();
+         $product->id = "1";
+         $product->name = "Product 1";
+         $product->description = "Description 1";
+         $product->category_id = "FOOD";
+         $product->save();
 
-        //  // insert 2 baris
-        //  $product = new Product();
-        //  $product->id = "1";
-        //  $product->name = "Product 1";
-        //  $product->description = "Description 1";
-        //  $product->category_id = "FOOD";
-        //  $product->save();
-
-        //  $product2 = new Product();
-        //  $product2->id = "2";
-        //  $product2->name = "Product 2";
-        //  $product2->description = "Description 2";
-        //  $product2->category_id = "FOOD";
-        //  $product2->price = 200;
-        //  $product2->save();
+         $product2 = new Product();
+         $product2->id = "2";
+         $product2->name = "Product 2";
+         $product2->description = "Description 2";
+         $product2->category_id = "FOOD";
+         $product2->price = 200;
+         $product2->save();
 
         // Insert 9 baris
 
