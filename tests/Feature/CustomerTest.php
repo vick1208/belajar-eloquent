@@ -111,4 +111,21 @@ class CustomerTest extends TestCase
             assertNotNull($pivot->created_at);
         }
     }
+    public function testPivotModel(){
+        $this->testManyToMany();
+        $customer = Customer::query()->find("VIC");
+        $products = $customer->likeProducts;
+
+        foreach ($products as $product) {
+
+            $pivot = $product->pivot; # sebagai object Model Like
+            assertNotNull($pivot);
+            assertNotNull($pivot->customer_id);
+            assertNotNull($pivot->product_id);
+            assertNotNull($pivot->created_at);
+
+            assertNotNull($pivot->customer);
+            assertNotNull($pivot->product);
+        }
+    }
 }
