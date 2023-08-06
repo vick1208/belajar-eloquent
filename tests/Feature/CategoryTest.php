@@ -62,7 +62,7 @@ class CategoryTest extends TestCase
     {
         $this->seed(CategorySeeder::class);
 
-        $category =  Category::find("FASH");
+        $category =  Category::find("FOOD");
         $category->name = "Food Updated";
 
         $res = $category->update();
