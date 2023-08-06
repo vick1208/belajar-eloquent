@@ -4,7 +4,9 @@ namespace Tests\Feature;
 
 use App\Models\Customer;
 use App\Models\Wallet;
+use Database\Seeders\CategorySeeder;
 use Database\Seeders\CustomerSeeder;
+use Database\Seeders\ProductSeeder;
 use Database\Seeders\VirtualAccountSeeder;
 use Database\Seeders\WalletSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -47,7 +49,7 @@ class CustomerTest extends TestCase
 
     public function testHasOneThrough()
     {
-        $this->seed([CustomerSeeder::class,WalletSeeder::class,VirtualAccountSeeder::class]);
+        $this->seed([CustomerSeeder::class, WalletSeeder::class, VirtualAccountSeeder::class]);
 
         $customer = Customer::query()->find("VIC");
 
@@ -56,6 +58,31 @@ class CustomerTest extends TestCase
         $virtualAccount = $customer->virtualAccount;
         assertNotNull($virtualAccount);
 
-        assertEquals("Mandiri",$virtualAccount->bank);
+        assertEquals("Mandiri", $virtualAccount->bank);
+    }
+
+    public function testManyToMany()
+    {
+        $this->seed([CustomerSeeder::class, CategorySeeder::class, ProductSeeder::class]);
+
+        $customer = Customer::query()->find("VIC");
+        self::assertNotNull($customer);
+
+        $customer->likeProducts()->attach("1");
+
+        $products = $customer->likeProducts;
+        self::assertCount(1, $products);
+
+        self::assertEquals("1", $products[0]->id);
+    }
+    public function testDetachManyToMany()
+    {
+        $this->testManyToMany();
+
+        $customer = Customer::query()->find("VIC");
+        $customer->likeProducts()->detach("1");
+
+        $products = $customer->likeProducts;
+        self::assertCount(0, $products);
     }
 }
