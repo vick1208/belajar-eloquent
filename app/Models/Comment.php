@@ -18,11 +18,7 @@ class Comment extends Model
         "comment" => "Lorem ipsum dolor sit amet."
     ];
 
-    /**
-     * commentable
-     *
-     * @return MorphTo
-     */
+
     public function commentable(): MorphTo
     {
         return $this->morphTo();

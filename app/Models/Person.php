@@ -14,19 +14,19 @@ class Person extends Model
     public $incrementing = true;
     public $timestamps = true;
 
-    /**
-     * fullName
-     *
-     * @return Attribute
-     */
+    // protected $casts = [
+    //     "created_at" => "datetime",
+    //     "updated_at" => "datetime"
+    // ];
+
     public function fullName(): Attribute
     {
         return Attribute::make(
             get: function (): string {
                 return $this->first_name . ' ' . $this->family_name;
             },
-            set: function (string $value) : array{
-                $names = explode(' ',$value);
+            set: function (string $value): array {
+                $names = explode(' ', $value);
                 return [
                     "first_name" => $names[0],
                     "family_name" => $names[1] ?? ''
@@ -34,17 +34,14 @@ class Person extends Model
             }
         );
     }
-    /**
-     * firstName
-     *
-     * @return Attribute
-     */
-    protected function firstName() : Attribute {
+
+    protected function firstName(): Attribute
+    {
         return Attribute::make(
-            get: function($value,$attributes):string{
+            get: function ($value, $attributes): string {
                 return strtoupper($value);
             },
-            set: function ($value):array {
+            set: function ($value): array {
                 return [
                     'first_name' => strtoupper($value)
                 ];

@@ -29,21 +29,12 @@ class Voucher extends Model
     {
         $builder->where("is_active", true);
     }
-    /**
-     * scopeNotActive
-     *
-     * @param  mixed $builder
-     * @return void
-     */
+
     public function scopeNotActive(Builder $builder): void
     {
         $builder->where("is_active", false);
     }
-    /**
-     * comments
-     *
-     * @return MorphMany
-     */
+
     public function comments(): MorphMany
     {
         return $this->morphMany(Comment::class, "commentable");

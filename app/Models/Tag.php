@@ -14,19 +14,11 @@ class Tag extends Model
     public $incrementing = false;
     public $timestamps = false;
 
-    /**
-     * products
-     *
-     * @return MorphToMany
-     */
+
     public function products() : MorphToMany {
         return $this->morphedByMany(Product::class,"taggable");
     }
-    /**
-     * vouchers
-     *
-     * @return MorphToMany
-     */
+
     public function vouchers() : MorphToMany {
         return $this->morphedByMany(Voucher::class,"taggable");
     }

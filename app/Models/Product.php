@@ -19,11 +19,7 @@ class Product extends Model
     public $incrementing = false;
     public $timestamps = false;
 
-    /**
-     * category
-     *
-     * @return BelongsTo
-     */
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
@@ -55,11 +51,7 @@ class Product extends Model
     {
         return $this->morphOne(Comment::class, "commentable")->oldest("created_at");
     }
-    /**
-     * tags
-     *
-     * @return MorphToMany
-     */
+
     public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, "taggable");
