@@ -16,6 +16,7 @@ class Customer extends Model
     protected $table = 'customers';
     protected $primaryKey = 'id';
     protected $keyType = 'string';
+    protected $with = ["wallet"];
     public $incrementing = false;
     public $timestamps = false;
 
@@ -36,16 +37,17 @@ class Customer extends Model
     public function likeProducts(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, "customers_likes_products", "customer_id", "product_id")
-        ->withPivot("created_at")->using(Like::class);
+            ->withPivot("created_at")->using(Like::class);
     }
     public function likeProductsLastWeek(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, "customers_likes_products", "customer_id", "product_id")
-        ->withPivot("created_at")
-        ->wherePivot("created_at",">=",Date::now()->addDays(-7))->using(Like::class);
+            ->withPivot("created_at")
+            ->wherePivot("created_at", ">=", Date::now()->addDays(-7))->using(Like::class);
     }
 
-    public function image() : MorphOne {
-        return $this->morphOne(Image::class,"imageable");
+    public function image(): MorphOne
+    {
+        return $this->morphOne(Image::class, "imageable");
     }
 }
