@@ -81,7 +81,8 @@ class ProductTest extends TestCase
         $comment = $product->oldestComment;
         self::assertNotNull($comment);
     }
-    public function testManyToManyPolymorphic() {
+    public function testManyToManyPolymorphic()
+    {
         $this->seed([CategorySeeder::class, ProductSeeder::class, VoucherSeeder::class, TagSeeder::class]);
 
         $product = Product::find("1");
@@ -95,7 +96,19 @@ class ProductTest extends TestCase
 
             $vouchers = $tag->vouchers;
             self::assertNotNull($vouchers);
-            self::assertCount(1,$vouchers);
+            self::assertCount(1, $vouchers);
         }
+    }
+    public function testEloquentCollection()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
+
+        # 2 product 1,2
+        $products = Product::query()->get();
+        # WHERE id IN (1,2)
+        $product = $products->toQuery()->where("price", 200)->get();
+
+        self::assertNotNull($product);
+        self::assertEquals("2",$product[0]->id);
     }
 }
