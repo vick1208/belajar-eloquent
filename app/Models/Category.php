@@ -17,7 +17,6 @@ class Category extends Model
     public $incrementing = false;
     public $timestamps = false;
 
-
     /**
      * The attributes that are mass assignable.
      *
@@ -27,6 +26,10 @@ class Category extends Model
         "id",
         "name",
         "description"
+    ];
+
+    protected $casts = [
+        'created_at' => "datetime:U"
     ];
 
     /**
