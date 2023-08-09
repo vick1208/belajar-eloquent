@@ -23,6 +23,7 @@ class CategoryTest extends TestCase
         $category = new Category();
         $category->id = "GAD";
         $category->name = "Gadget";
+        $category->is_active = true;
         $res = $category->save();
 
         assertTrue($res);
@@ -35,7 +36,8 @@ class CategoryTest extends TestCase
         for ($i = 0; $i < 10; $i++) {
             $categories[] = [
                 "id" => "ID $i",
-                "name" => "Name $i"
+                "name" => "Name $i",
+                "is_active" => true
             ];
         }
 
@@ -77,6 +79,7 @@ class CategoryTest extends TestCase
             $category = new Category();
             $category->id = "ID $i";
             $category->name = "Name $i";
+            $category->is_active = true;
             $category->save();
         }
 
@@ -98,7 +101,8 @@ class CategoryTest extends TestCase
         for ($i = 0; $i < 10; $i++) {
             $categories[] = [
                 "id" => "ID $i",
-                "name" => "Name $i"
+                "name" => "Name $i",
+                "is_active"=>true
             ];
         }
 
@@ -129,7 +133,8 @@ class CategoryTest extends TestCase
         for ($i = 0; $i < 10; $i++) {
             $categories[] = [
                 "id" => "ID $i",
-                "name" => "Name $i"
+                "name" => "Name $i",
+                "is_active" => true
             ];
         }
 
@@ -204,12 +209,12 @@ class CategoryTest extends TestCase
     {
         $this->seed([CategorySeeder::class, ProductSeeder::class]);
 
-        $category = Category::query()->find("ANIME");
+        $category = Category::query()->find("FOOD");
         self::assertNotNull($category);
 
         $products = $category->products;
         self::assertNotNull($products);
-        self::assertCount(9, $products);
+        self::assertCount(2, $products);
     }
 
     public function testOneToManyQuery()
@@ -237,10 +242,10 @@ class CategoryTest extends TestCase
 
         $category = Category::find("FOOD");
         $products = $category->products;
-        self::assertCount(1, $products);
+        self::assertCount(2, $products);
 
         $outOfStockProducts = $category->products()->where('stock', '<=', 0)->get();
-        self::assertCount(1, $outOfStockProducts);
+        self::assertCount(2, $outOfStockProducts);
     }
     public function testHasManyThrough()
     {

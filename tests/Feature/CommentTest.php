@@ -15,6 +15,8 @@ class CommentTest extends TestCase
         $comment->email = "eko@pzn.org";
         $comment->title = "Test title";
         $comment->comment = "Sample Comment";
+        $comment->commentable_id = "1";
+        $comment->commentable_type = "product";
         $comment->save();
         self::assertNotNull($comment->id);
     }
@@ -22,6 +24,8 @@ class CommentTest extends TestCase
     public function testDefaultAttValues(){
         $comment = new Comment();
         $comment->email = "eko@pzn.org";
+        $comment->commentable_id = "1";
+        $comment->commentable_type = "product";
 
         $comment->save();
         self::assertNotNull($comment->id);
