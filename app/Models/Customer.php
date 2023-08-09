@@ -20,6 +20,11 @@ class Customer extends Model
     public $incrementing = false;
     public $timestamps = false;
 
+    /**
+     * wallet
+     *
+     * @return HasOne
+     */
     public function wallet(): HasOne
     {
         return $this->hasOne(Wallet::class, "customer_id", "id");
@@ -34,11 +39,21 @@ class Customer extends Model
         return $this->hasMany(Review::class, "customer_id", "id");
     }
 
+    /**
+     * likeProducts
+     *
+     * @return BelongsToMany
+     */
     public function likeProducts(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, "customers_likes_products", "customer_id", "product_id")
             ->withPivot("created_at")->using(Like::class);
     }
+    /**
+     * likeProductsLastWeek
+     *
+     * @return BelongsToMany
+     */
     public function likeProductsLastWeek(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, "customers_likes_products", "customer_id", "product_id")
@@ -46,6 +61,11 @@ class Customer extends Model
             ->wherePivot("created_at", ">=", Date::now()->addDays(-7))->using(Like::class);
     }
 
+    /**
+     * function image
+     *
+     * @return MorphOne
+     */
     public function image(): MorphOne
     {
         return $this->morphOne(Image::class, "imageable");

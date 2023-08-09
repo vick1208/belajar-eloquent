@@ -14,6 +14,11 @@ class VirtualAccount extends Model
     public $incrementing = true;
     public $timestamps = false;
 
+    /**
+     * wallet
+     *
+     * @return BelongsTo
+     */
     public function wallet() : BelongsTo {
         return $this->belongsTo(Wallet::class,"wallet_id","id");
     }

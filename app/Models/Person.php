@@ -14,6 +14,11 @@ class Person extends Model
     public $incrementing = true;
     public $timestamps = true;
 
+    /**
+     * fullName
+     *
+     * @return Attribute
+     */
     public function fullName(): Attribute
     {
         return Attribute::make(
@@ -29,6 +34,11 @@ class Person extends Model
             }
         );
     }
+    /**
+     * firstName
+     *
+     * @return Attribute
+     */
     protected function firstName() : Attribute {
         return Attribute::make(
             get: function($value,$attributes):string{

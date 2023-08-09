@@ -14,10 +14,20 @@ class Review extends Model
     public $incrementing = true;
     public $timestamps = false;
 
+    /**
+     * product
+     *
+     * @return BelongsTo
+     */
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, "product_id", "id");
     }
+    /**
+     * customer
+     *
+     * @return BelongsTo
+     */
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class, "customer_id", "id");

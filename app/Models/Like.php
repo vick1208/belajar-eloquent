@@ -19,10 +19,20 @@ class Like extends Pivot
         return false;
     }
 
+    /**
+     * customer
+     *
+     * @return BelongsTo
+     */
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class, "customer_id", "id");
     }
+    /**
+     * product
+     *
+     * @return BelongsTo
+     */
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, "product_id", "id");

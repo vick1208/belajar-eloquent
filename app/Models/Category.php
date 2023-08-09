@@ -23,26 +23,51 @@ class Category extends Model
         "description"
     ];
 
+    /**
+     * products
+     *
+     * @return HasMany
+     */
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'category_id', 'id');
     }
 
+    /**
+     * booted
+     *
+     * @return void
+     */
     protected static function booted()
     {
         parent::booted();
         self::addGlobalScope(new IsActiveScope);
     }
 
+    /**
+     * lowestPrice
+     *
+     * @return HasOne
+     */
     public function lowestPrice(): HasOne
     {
         return $this->hasOne(Product::class, "category_id", "id")->oldest("price");
     }
+    /**
+     * highestPrice
+     *
+     * @return HasOne
+     */
     public function highestPrice(): HasOne
     {
         return $this->hasOne(Product::class, "category_id", "id")->latest("price");
     }
 
+    /**
+     * reviews
+     *
+     * @return HasManyThrough
+     */
     public function reviews(): HasManyThrough
     {
         return $this->hasManyThrough(Review::class, Product::class, "category_id", "product_id", "id", "id");

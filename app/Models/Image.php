@@ -14,6 +14,11 @@ class Image extends Model
     public $incrementing = true;
     public $timestamps = false;
 
+    /**
+     * imageable
+     *
+     * @return MorphTo
+     */
     public function imageable():MorphTo {
         return $this->morphTo();
     }
