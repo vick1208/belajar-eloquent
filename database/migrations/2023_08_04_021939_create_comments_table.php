@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
             // $table->integer("id",true);
-            // $table->integer("id")->autoIncrement();
+            $table->integer("id")->autoIncrement();
             $table->string("email",100)->nullable(false);
             $table->string("title",200)->nullable(false);
             $table->text("comment")->nullable();
